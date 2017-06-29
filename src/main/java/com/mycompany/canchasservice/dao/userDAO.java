@@ -9,6 +9,7 @@ import com.mycompany.canchasservice.dto.userDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -52,5 +53,28 @@ public class userDAO {
             rel.setTelefono(rs.getString(5));
         }
         return rel;
+    }
+    
+    public boolean registrarPersona(userDTO dto) throws Exception {
+        boolean exito = false;
+        conn = Conexion.generarConexion();
+        if (conn != null) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO users"
+                    + " (usuario, nombre, email,contrasena,telefono) values (?,?,?,?,?)");
+            stmt.setString(1, dto.getUsuario());
+            stmt.setString(2, dto.getNombre());
+            stmt.setString(3, dto.getEmail());
+            stmt.setString(4, dto.getContrasena());
+            stmt.setString(5, dto.getTelefono());
+            
+            try {
+                exito = stmt.executeUpdate() > 0;
+            } catch (SQLException ex) {
+            } finally {
+                conn.close();
+                stmt.close();
+            }
+        }
+        return exito;
     }
 }

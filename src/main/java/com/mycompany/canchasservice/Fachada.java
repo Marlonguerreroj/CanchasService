@@ -32,5 +32,12 @@ public class Fachada {
         CanchaDAO a = new CanchaDAO();
         return a.listarCancha(id);
     }
-
+    
+    public boolean registrarUsuario (String usuario,String nombre,String email,
+            String contrasena, String telefono)throws Exception{
+        userDAO dao =new userDAO();
+        userDTO dto = new userDTO(usuario, nombre, email, contrasena, telefono);
+        return dao.registrarPersona(dto);
+    }
+    
 }
