@@ -7,7 +7,7 @@ package com.mycompany.canchasservice.rest;
 
 import com.google.gson.Gson;
 import com.mycompany.canchasservice.Fachada;
-import com.mycompany.canchasservice.dto.userDTO;
+import com.mycompany.canchasservice.dto.*;
 import java.util.ArrayList;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -46,6 +46,38 @@ public class WebService {
         try {
             Fachada f = new Fachada();
             userDTO list = f.listarUsuario(usuario);
+            Gson g = new Gson();
+            res = g.toJson(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    
+    @GET
+    @Path("/canchas")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public String listarCanchas() {
+        String res = "";
+        try {
+            Fachada f = new Fachada();
+            ArrayList<CanchaDTO> list = (ArrayList<CanchaDTO>) f.listarCanchas();
+            Gson g = new Gson();
+            res = g.toJson(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    
+    @GET
+    @Path("/listarCancha/name={id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public String listarCancha(@PathParam("id") String id) {
+        String res = "";
+        try {
+            Fachada f = new Fachada();
+            CanchaDTO list = f.listarCancha(id);
             Gson g = new Gson();
             res = g.toJson(list);
         } catch (Exception e) {

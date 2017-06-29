@@ -5,9 +5,10 @@
  */
 package com.mycompany.canchasservice;
 
-import com.mycompany.canchasservice.dao.userDAO;
-import com.mycompany.canchasservice.dto.userDTO;
+import com.mycompany.canchasservice.dao.*;
+import com.mycompany.canchasservice.dto.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,6 +22,15 @@ public class Fachada {
     public userDTO listarUsuario(String usuario) throws Exception {
         userDAO a = new userDAO();
         return a.listarPersona(usuario);
+    }
+    
+    public List<CanchaDTO> listarCanchas() throws Exception {
+        CanchaDAO a = new CanchaDAO();
+        return a.listarCanchas();
+    }
+    public CanchaDTO listarCancha(String id) throws Exception {
+        CanchaDAO a = new CanchaDAO();
+        return a.listarCancha(id);
     }
 
 }
