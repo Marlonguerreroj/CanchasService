@@ -22,5 +22,11 @@ public class Fachada {
         userDAO a = new userDAO();
         return a.listarPersona(usuario);
     }
+    
+    public boolean registrarUsuario (String usuario,String nombre,String email,String contrasena, String telefono)throws Exception{
+        userDAO dao =new userDAO();
+        userDTO dto = new userDTO(usuario, nombre, email, contrasena, telefono);
+        return dao.registrarPersona(dto);
+    }
 
 }

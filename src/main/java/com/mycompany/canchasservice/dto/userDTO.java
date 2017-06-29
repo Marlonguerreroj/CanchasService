@@ -5,17 +5,46 @@
  */
 package com.mycompany.canchasservice.dto;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  *
  * @author marlonguerrero
  */
 public class userDTO {
 
-    private String usuario, nombre, email, contrasena, telefono;
+    @SerializedName("usuario")
+    @Expose
+    private String usuario;
+    @SerializedName("nombre")
+    @Expose
+    private String nombre;
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("contrasena")
+    @Expose
+    private String contrasena;
+    @SerializedName("telefono")
+    @Expose
+    private String telefono;
 
     public String getUsuario() {
         return usuario;
     }
+
+    public userDTO() {
+    }
+
+    public userDTO(String usuario, String nombre, String email, String contrasena, String telefono) {
+        this.usuario = usuario;
+        this.nombre = nombre;
+        this.email = email;
+        this.contrasena = contrasena;
+        this.telefono = telefono;
+    }
+    
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
