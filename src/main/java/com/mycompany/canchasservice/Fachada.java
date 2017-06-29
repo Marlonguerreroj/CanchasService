@@ -40,4 +40,10 @@ public class Fachada {
         return dao.registrarPersona(dto);
     }
     
+    public boolean registrarValoracion (String usuario, String comentario, int idCancha, 
+            int calificacion)throws Exception{
+        ValoracionDAO dao =new ValoracionDAO();
+        return dao.registrarValoracion(new ValoracionDTO(calificacion, idCancha, usuario, comentario));
+    }
+    
 }

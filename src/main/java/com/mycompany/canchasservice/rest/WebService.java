@@ -105,4 +105,20 @@ public class WebService {
         }
         return res;
     }
+    
+    @POST
+    @Path("/RegistrarValoracion")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public String registrarValoracion(@FormParam("usuario") String usuario,@FormParam("id_cancha") int idCancha,
+            @FormParam("comentario") String comentario,@FormParam("calificacion") int calificacion) {
+        String res = "";
+        try {
+            Fachada f = new Fachada();
+            res = "" + f.registrarValoracion(usuario, comentario, idCancha, calificacion);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
 }

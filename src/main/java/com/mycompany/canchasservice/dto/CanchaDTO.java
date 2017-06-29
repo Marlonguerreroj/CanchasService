@@ -5,18 +5,23 @@
  */
 package com.mycompany.canchasservice.dto;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Alejandro
  */
 public class CanchaDTO {
     
-    private int id, precioHora, cantidadPersonas;
+    private int id, precioHora, cantidadPersonas, valoracionGeneral;
     private EstablecimientoDTO establecimiento;
     private String descripcion;
+    private ArrayList<ValoracionDTO> valoraciones;
 
     public CanchaDTO() {
         establecimiento = new EstablecimientoDTO();
+        valoraciones = new ArrayList<>();
+        valoracionGeneral = 0;
     }
 
     public CanchaDTO(int id, int precioHora, int cantidadPersonas, 
@@ -26,6 +31,8 @@ public class CanchaDTO {
         this.cantidadPersonas = cantidadPersonas;
         this.establecimiento = establecimiento;
         this.descripcion = descripcion;
+        valoraciones = new ArrayList<>();
+        valoracionGeneral = 0;
     }
     
     public CanchaDTO(int precioHora, int cantidadPersonas, 
@@ -34,6 +41,8 @@ public class CanchaDTO {
         this.cantidadPersonas = cantidadPersonas;
         this.establecimiento = establecimiento;
         this.descripcion = descripcion;
+        valoraciones = new ArrayList<>();
+        valoracionGeneral = 0;
     }
 
     public int getId() {
@@ -75,5 +84,26 @@ public class CanchaDTO {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-  
+
+    public void setValoraciones(ArrayList<ValoracionDTO> valoraciones) {
+        this.valoraciones = valoraciones;
+        for(int i = 0; i < valoraciones.size(); i++) {
+            valoracionGeneral += valoraciones.get(i).getValor();
+        }
+        if(valoraciones.size() > 0)
+            valoracionGeneral /= valoraciones.size();
+    }
+
+    public ArrayList<ValoracionDTO> getValoraciones() {
+        return valoraciones;
+    }
+
+    public void setValoracionGeneral(int valoracionGeneral) {
+        this.valoracionGeneral = valoracionGeneral;
+    }
+
+    public int getValoracionGeneral() {
+        return valoracionGeneral;
+    }
+    
 }

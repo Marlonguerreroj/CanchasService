@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import com.mycompany.canchasservice.dto.CanchaDTO;
 import com.mycompany.canchasservice.dto.EstablecimientoDTO;
+import com.mycompany.canchasservice.dto.ValoracionDTO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class CanchaDAO {
         ArrayList<CanchaDTO> canchas = new ArrayList<>();
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT c.*, e.* FROM canchas "
-                    + "c JOIN establecimientos e ON c.id_establecimiento = e.id");
+                    + "c JOIN establecimientos e ON c.id_establecimiento = e.id_est");
             ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
                 CanchaDTO dto = new CanchaDTO();
@@ -47,10 +48,13 @@ public class CanchaDAO {
                 est.setTelefono(rs.getString("telefono"));
                 est.setEmail(rs.getString("email"));
                 dto.setEstablecimiento(est);
+                ValoracionDAO dao = new ValoracionDAO(conn);
+                dto.setValoraciones((ArrayList<ValoracionDTO>) dao.listarValoraciones(dto.getId()));
                 canchas.add(dto);
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             canchas = new ArrayList<>();
+            ex.printStackTrace();
         } finally {
             if(conn != null) {
                 try {
@@ -65,7 +69,7 @@ public class CanchaDAO {
         CanchaDTO cancha = new CanchaDTO();
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT c.*, e.* FROM canchas "
-                    + "c JOIN establecimientos e ON c.id_establecimiento = e.id "
+                    + "c JOIN establecimientos e ON c.id_establecimiento = e.id_est "
                     + "WHERE c.id_cancha = ?");
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -83,8 +87,10 @@ public class CanchaDAO {
                 est.setTelefono(rs.getString("telefono"));
                 est.setEmail(rs.getString("email"));
                 cancha.setEstablecimiento(est);
+                ValoracionDAO dao = new ValoracionDAO(conn);
+                cancha.setValoraciones((ArrayList<ValoracionDTO>) dao.listarValoraciones(cancha.getId()));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             cancha = new CanchaDTO();
         } finally {
             if(conn != null) {
